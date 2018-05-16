@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiddenException", "HiddenException\HiddenException.csproj", "{A30E9918-D38A-41FF-A5CA-6587E2A9A62D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnhandledException", "UnhandledException\UnhandledException.csproj", "{3681E0A6-90FC-4668-90AE-3DCCF49CAA5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryLeak", "MemoryLeak\MemoryLeak.csproj", "{FFA7EF03-949C-423E-A71F-7AAE97A87338}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadLock", "DeadLock\DeadLock.csproj", "{C6368AB7-D897-42B2-B89C-01A8FD62880B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A30E9918-D38A-41FF-A5CA-6587E2A9A62D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30E9918-D38A-41FF-A5CA-6587E2A9A62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30E9918-D38A-41FF-A5CA-6587E2A9A62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30E9918-D38A-41FF-A5CA-6587E2A9A62D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3681E0A6-90FC-4668-90AE-3DCCF49CAA5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3681E0A6-90FC-4668-90AE-3DCCF49CAA5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3681E0A6-90FC-4668-90AE-3DCCF49CAA5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3681E0A6-90FC-4668-90AE-3DCCF49CAA5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFA7EF03-949C-423E-A71F-7AAE97A87338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFA7EF03-949C-423E-A71F-7AAE97A87338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFA7EF03-949C-423E-A71F-7AAE97A87338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFA7EF03-949C-423E-A71F-7AAE97A87338}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6368AB7-D897-42B2-B89C-01A8FD62880B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6368AB7-D897-42B2-B89C-01A8FD62880B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6368AB7-D897-42B2-B89C-01A8FD62880B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6368AB7-D897-42B2-B89C-01A8FD62880B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
