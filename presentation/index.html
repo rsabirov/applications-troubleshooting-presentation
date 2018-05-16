@@ -4,6 +4,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	
+	<meta name="description" content=".NET Application troubleshooting tools overview">
+	<meta name="keywords" content="ETW,.NET,Performance,Profiling,troubleshooting,PerfView,ProcDump">
+	<meta name="author" content="Rail Sabirov">
 
 	<title>Application troubleshooting - Tools and techniques</title>
 
@@ -145,8 +149,6 @@
 					<li>Trace anything in Windows</li>
 				</ul>
 
-				<p class="fragment" style="font-size: small">tool with ugly UI</p>
-
 				<aside class="notes">
 					PerfView demo: show providers list, show how to capture, show the results (CPU, GC, Events).
 				</aside>
@@ -235,6 +237,9 @@
 					<p>
 						To use WinDbg you should at least hacker :). Not really... Just google for "windbg .net cheat sheet".
 					</p>
+					<p>
+						clrmd library provides .net api to memory dumps!
+					</p>
 				</aside>
 			</section>
 
@@ -284,8 +289,8 @@
 			slideNumber: 'c/t',
 			transition: 'fade',
 
-			width: 1920,
-			height: 1080,
+			width: 1200,
+			height: 900,
 			minScale: 0.1,
 			maxScale: 1.5,
 		});
