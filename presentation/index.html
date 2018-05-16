@@ -1,49 +1,295 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+	<title>Application troubleshooting - Tools and techniques</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/white.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Applications troubleshooting</h1>
+				<h2>Tools and techniques</h2>
+				<hr/>
+				<p>Rail Sabirov</p>
+				<p>GitHub: <a href="https://github.com/rsabirov">@rsabirov</a></p>
+
+				<aside class="notes">
+					<p>In this presentation I will give overview of the different techniques for troubleshooting.</p>
+					<p>This presentation more about .NET applications, but some tools applicable to native apps also.</p>
+				</aside>
+			</section>
+
+			<section>
+				<h2>What can go wrong?</h2>
+				<ul>
+					<li class="fragment">app is crashing</li>
+					<li class="fragment">app is hanging</li>
+					<li class="fragment">app is slow</li>
+					<li class="fragment">high resource usage (cpu, mem, disk, ...)</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>Sources of information</h2>
+
+				<ul>
+					<li>Application log files</li>
+					<li>Task manager / Process explorer</li>
+					<li>Windows Events log</li>
+					<li>Performance counters (and Windows Data Collectors)</li>
+					<li>Sysinternals tools</li>
+					<li>Profilers (dotTrace, dotMemory, ...)</li>
+					<li>Event Tracing for Windows (ETW) and Tools that using ETW (PerfView)</li>
+					<li>Memory dumps</li>
+					<li>Technology specific tools (like Sql Profiler)</li>
+				</ul>
+
+				<aside class="notes">
+					<p>"Application log files" usually can help with business logic related bugs.</p>
+
+					<p>
+						Windows provides some tools to get insights about system health and applications performance like Task Manager,
+						Windows Events log, Performance counters, ETW Events.
+					</p>
+
+					<p>Usually it's better to go from higher level tool to lower level techniques.</p>
+				</aside>
+			</section>
+
+			<section>
+					<h2><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite">Sysinternals suite</a></h2>
+					<h3>Best toolset for windows ever</h3>
+					<p>
+							AccessChk, AccessEnum, AdExplorer, AdInsight, AdRestore, Autologon, Autoruns, BgInfo, BlueScreen, CacheSet, ClockRes, Contig, 
+							Coreinfo, Ctrl2Cap, DebugView, Desktops, Disk2vhd, DiskExt, DiskMon, DiskView, Disk Usage (DU), EFSDump, FindLinks, Handle, 
+							Hex2dec, Junction, LDMDump, ListDLLs, LiveKd, LoadOrder, LogonSessions, MoveFile, NotMyFault, NTFSInfo, PageDefrag, PendMoves, 
+							PipeList, PortMon, ProcDump, Process Explorer, Process Monitor, PsExec, PsFile, PsGetSid, PsInfo, PsKill, PsList, PsLoggedOn, 
+							PsLogList, PsPasswd, PsPing, PsService, PsShutdown, PsSuspend, PsTools, RAMMap, RegDelNull, RegHide, RegJump, Registry Usage (RU), 
+							SDelete, ShareEnum, ShellRunas, Sigcheck, Streams, Strings, Sync, Sysmon, TCPView, VMMap, VolumeID, WhoIs, WinObj, ZoomIt
+					</p>
+	
+					<aside class="notes">
+						<p>It's worth to spend time reading at least description for each tool, to know which problem it solves and how can help.</p>
+						<p>Demo of following tools: Process Explorer, Autoruns, Process Monitor, ProcDump, TCPView...</p>						
+					</aside>
+			</section>
+
+			<section>
+				<h2>Event Tracing for Windows (ETW)</h2>
+
+				<ul>
+					<li>Semantic logging (each event and source has schema)</li>
+					<li>Fast. Very fast.</li>
+					<li>Doesn't affects performance if disabled</li>
+					<li>Can drop events if "performance is not good enough"</li>
+					<li>Used internally in Windows</li>
+					<li>Used in .NET CLR (provides detailed info about CLR, JIT, GC...)</li>
+				</ul>
+
+				<aside class="notes">
+					ETW a general-purpose, high-speed tracing facility provided by the operating system.
+					Using a buffering and logging mechanism implemented in the kernel, ETW provides a tracing mechanism for
+					events raised by both user-mode applications and kernel-mode device drivers.
+					Additionally, ETW gives you the ability to enable and disable logging dynamically,
+					making it easy to perform detailed tracing in production environments without requiring reboots or application restarts.
+					The logging mechanism uses per-processor buffers that are written to disk by an asynchronous writer thread.
+					This allows large-scale server applications to write events with minimum disturbance.
+				</aside>
+			</section>
+	
+			<section>
+				<h2>ETW Architecture overview</h2>
+
+				<img src="img/etw-architecture-overview.png" title="ETW architecture (from MSDN Magazine April 2007)" />
+
+				<aside class="notes">
+					As shown, there are four main types of components in ETW:
+					event providers, controllers, consumers, and event trace sessions. Buffering and logging take place
+					in event tracing sessions, which accept events and create a trace file. There are a number of logging modes
+					available for ETW sessions. For instance, a session can be configured to deliver events directly to consumer
+					applications or to overwrite old events in a file by wrapping around when a certain size is reached.
+					A separate writer thread created for each session flushes them to a file or to real-time consumer applications.
+					To enable high-performance, per-processor buffers are used to eliminate the need for a lock in the logging path.
+				</aside>
+			</section>
+
+			<section>
+				<h2>PerfView</h2>
+				<p>Very powerful tool for ETW</p>
+
+				<ul>
+					<li>Profile CPU usage</li>
+					<li>Analyze .NET GC</li>
+					<li>Analyze .NET Memory traffic</li>
+					<li>Analyze File/Network access</li>
+					<li>Trace anything in Windows</li>
+				</ul>
+
+				<p class="fragment" style="font-size: small">tool with ugly UI</p>
+
+				<aside class="notes">
+					PerfView demo: show providers list, show how to capture, show the results (CPU, GC, Events).
+				</aside>
+			</section>
+
+			<section>
+				<h2>How to get Memory dump?</h2>
+
+				<ul>
+					<li><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb787181">Windows Error Reporting</a></li>
+					<li>Windows Task Manager</li>
+					<li>Sysinternals Process Explorer</li>
+					<li>ProcDump</li>
+				</ul>
+
+				<aside class="notes">
+					<p>WER can save crash dumps to folder defined in registry. It's worth configure it on all Prod and Testing environments.</p>
+					<p>Task manager and Process Explorer might be enough for simple apps (with small memory footprint), because they suspending process execution.</p>
+				</aside>
+			</section>
+
+			<section>
+				<h2>ProcDump</h2>
+				
+				<div class="fragment">
+					<p>Write a mini dump when process window is unresponsive for more than 5 seconds:</p>
+					<pre><code data-trim class="lang-shell">
+						procdump -h outlook.exe hungwindow.dmp
+					</code></pre>
+				</div>
+				
+				<div class="fragment">
+					Write a dump when process has an unhandled exception
+					<pre><code data-trim class="lang-shell">
+						procdump -mp -e store.exe
+					</code></pre>
+				</div>				
+
+				<div class="fragment">
+					Write a full dump of a process with PID '4572' using cloning (to avoid service interruptions)
+					<pre><code data-trim class="lang-shell">
+						procdump -ma -r 4572
+					</code></pre>
+				</div>
+
+				<div class="fragment">
+					Write a mini dump of a process named 'outlook' when total system CPU usage exceeds 20% for 10 seconds
+					<pre><code data-trim class="lang-shell">
+						procdump outlook -p "\Processor(_Total)\% Processor Time" 20
+					</code></pre>
+				</div>
+	
+				<aside class="notes">
+					<p>
+						ProcDump advanced tool for dumps capturing in production.
+						It can clone process memory to not interrupt execution. It can get crash dumps, and dumps on perf counter related condition.
+					</p>
+					<p>Here is examples of some ProcDump commands.</p>
+					<p>Mini dump format only includes thread and handle information.</p>
+					<p>Full dump only all process memory.</p>
+				</aside>
+			</section>
+
+			<section>
+				<h2>How to analyze Memory dump</h2>
+
+				<ul>
+					<li>DebugDiag (crash and memory)</li>
+					<li>PerfView (memory)</li>
+					<li>DotMemory (memory)</li>
+					<li>WinDbg (crash and memory)</li>
+					<li><a href="https://github.com/Microsoft/clrmd">clrmd library</a> (memory)</li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						Easiest way is to use DebugDiag from Windows debugging tools. It has 2 rule sets: 
+						Crash/Hang analysis (crash dumps, exceptions, deadlocks) and Memory analysis (memory issues).
+					</p>
+					<p>
+						DotMemory one of 2 .Net Memory profilers which can open memory dumps.
+					</p>
+					<p>
+						PerfView can get only list of the objects (not primary use case).
+					</p>
+					<p>
+						To use WinDbg you should at least hacker :). Not really... Just google for "windbg .net cheat sheet".
+					</p>
+				</aside>
+			</section>
+
+			<section>
+				<h2>Debugging symbols</h2>
+
+				<ul>
+					<li>Provides function names for unmanaged code</li>
+					<li>Provides call stacks in .NET exceptions with line numbers</li>
+					<li>Enables <em>Step into</em> external code during the debugging</li>
+				</ul>
+
+				<h3>Best practices</h3>
+				<ul>
+					<li>
+						System wide symbol path
+						<pre><code data-trim class="lang-shell">
+							_NT_SYMBOL_PATH=SRV*%TEMP%\symbols*http://msdl.microsoft.com/download/symbols 
+						</code></pre>
+					</li>
+					<li>Include *.pdb files application distribution package</li>
+				</ul>
+			</section>
+
+			<section>
+				<h1>Thank you!</h1>
+			</section>
 		</div>
+	</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+			]
+		});
+		Reveal.configure({ 
+			slideNumber: 'c/t',
+			transition: 'fade',
+
+			width: 1920,
+			height: 1080,
+			minScale: 0.1,
+			maxScale: 1.5,
+		});
+	</script>
+</body>
+
 </html>
