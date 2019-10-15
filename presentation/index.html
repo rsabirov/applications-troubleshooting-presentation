@@ -17,6 +17,8 @@
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/zenburn.css">
 
+	<link rel="stylesheet" href="css/custom.css">
+
 	<!-- Printing and PDF exports -->
 	<script>
 		var link = document.createElement('link');
@@ -31,18 +33,30 @@
 	<div class="reveal">
 		<div class="slides">
 			<section>
-				<h1>Applications troubleshooting</h1>
-				<h2>Tools and techniques</h2>
+				<h1>Production troubleshooting in .NET</h1>
 				<hr/>
 				<p>Rail Sabirov</p>
 				<p>GitHub: <a href="https://github.com/rsabirov">@rsabirov</a></p>
 
 				<aside class="notes">
 					<p>In this presentation I will give overview of the different techniques for troubleshooting.</p>
-					<p>This presentation more about .NET applications, but some tools applicable to native apps also.</p>
+					<p>This presentation is more about .NET applications, but some tools applicable to native apps also.</p>
 				</aside>
 			</section>
 
+			<section>
+				<h2>Who ever had a issues on Production environment?</h2>
+			</section>
+
+			<section>
+				<h2>Why Prod issues so hard to diagnose?</h2>
+				<ul>
+					<li class="fragment">hard to reproduce on other environments</li>
+					<li class="fragment">can't run intrusive tool</li>
+					<li class="fragment">can't install tools usually</li>
+				</ul>
+			</section>
+	
 			<section>
 				<h2>What can go wrong?</h2>
 				<ul>
@@ -50,6 +64,7 @@
 					<li class="fragment">app is hanging</li>
 					<li class="fragment">app is slow</li>
 					<li class="fragment">high resource usage (cpu, mem, disk, ...)</li>
+					<li class="fragment">and many more... :)</li>
 				</ul>
 			</section>
 
@@ -60,11 +75,10 @@
 					<li>Application log files</li>
 					<li>Task manager / Process explorer</li>
 					<li>Windows Events log</li>
-					<li>Performance counters (and Windows Data Collectors)</li>
+					<li>Performance counters</li>
 					<li>Sysinternals tools</li>
-					<li>Profilers (dotTrace, dotMemory, ...)</li>
-					<li>Event Tracing for Windows (ETW) and Tools that using ETW (PerfView)</li>
 					<li>Memory dumps</li>
+					<li>Event Tracing for Windows (ETW) and Tools that using ETW (PerfView)</li>
 					<li>Technology specific tools (like Sql Profiler)</li>
 				</ul>
 
@@ -82,20 +96,28 @@
 
 			<section>
 					<h2><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite">Sysinternals suite</a></h2>
-					<h3>Best toolset for windows ever</h3>
-					<p>
+					<div>
 							AccessChk, AccessEnum, AdExplorer, AdInsight, AdRestore, Autologon, Autoruns, BgInfo, BlueScreen, CacheSet, ClockRes, Contig, 
 							Coreinfo, Ctrl2Cap, DebugView, Desktops, Disk2vhd, DiskExt, DiskMon, DiskView, Disk Usage (DU), EFSDump, FindLinks, Handle, 
 							Hex2dec, Junction, LDMDump, ListDLLs, LiveKd, LoadOrder, LogonSessions, MoveFile, NotMyFault, NTFSInfo, PageDefrag, PendMoves, 
 							PipeList, PortMon, ProcDump, Process Explorer, Process Monitor, PsExec, PsFile, PsGetSid, PsInfo, PsKill, PsList, PsLoggedOn, 
 							PsLogList, PsPasswd, PsPing, PsService, PsShutdown, PsSuspend, PsTools, RAMMap, RegDelNull, RegHide, RegJump, Registry Usage (RU), 
 							SDelete, ShareEnum, ShellRunas, Sigcheck, Streams, Strings, Sync, Sysmon, TCPView, VMMap, VolumeID, WhoIs, WinObj, ZoomIt
-					</p>
+					</div>
 	
 					<aside class="notes">
 						<p>It's worth to spend time reading at least description for each tool, to know which problem it solves and how can help.</p>
 						<p>Demo of following tools: Process Explorer, Autoruns, Process Monitor, ProcDump, TCPView...</p>						
 					</aside>
+			</section>
+
+			<section>
+				<h2>Demo 1: ProcDump, Process Explorer</h2>
+
+				<aside class="notes">
+					<p>In this demo I will show how to do basic diagnostic using some of the SysInternals tools.</p>
+					<p></p>
+				</aside>
 			</section>
 
 			<section>
@@ -105,7 +127,7 @@
 					<li>Semantic logging (each event and source has schema)</li>
 					<li>Fast. Very fast.</li>
 					<li>Doesn't affects performance if disabled</li>
-					<li>Can drop events if "performance is not good enough"</li>
+					<li>Can drop events if "performance is not enough"</li>
 					<li>Used internally in Windows</li>
 					<li>Used in .NET CLR (provides detailed info about CLR, JIT, GC...)</li>
 				</ul>
@@ -142,7 +164,9 @@
 				<p>Very powerful tool for ETW</p>
 
 				<ul>
+					<li>No installation needed</li>
 					<li>Profile CPU usage</li>
+					<li>Analyze .NET Memory dumps</li>
 					<li>Analyze .NET GC</li>
 					<li>Analyze .NET Memory traffic</li>
 					<li>Analyze File/Network access</li>
@@ -158,13 +182,14 @@
 				<h2>How to get Memory dump?</h2>
 
 				<ul>
-					<li><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb787181">Windows Error Reporting</a></li>
-					<li>Windows Task Manager</li>
-					<li>Sysinternals Process Explorer</li>
-					<li>ProcDump</li>
+					<li class="fragment">Windows Task Manager</li>
+					<li class="fragment">Sysinternals Process Explorer</li>
+					<li class="fragment"><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb787181">Windows Error Reporting</a></li>
+					<li class="fragment">ProcDump</li>
 				</ul>
 
 				<aside class="notes">
+					<p>How we can get Memory dump?</p>
 					<p>WER can save crash dumps to folder defined in registry. It's worth configure it on all Prod and Testing environments.</p>
 					<p>Task manager and Process Explorer might be enough for simple apps (with small memory footprint), because they suspending process execution.</p>
 				</aside>
@@ -244,6 +269,25 @@
 			</section>
 
 			<section>
+				<h2>How to analyze Memory dump in WinDbg?</h2>
+
+				<ul>
+					<li class="fragment">Open dump file in DebugDiag</li>
+					<li class="fragment">google "WinDbg cheatsheet"</li>
+					<li class="fragment">try to make it work :)</li>
+					<li class="fragment">Profit! (may be)</li>
+
+					<li class="fragment">Very powerfull tool</li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						To use WinDbg you should at least hacker :). Not really... Just google for "windbg .net cheat sheet".
+					</p>
+				</aside>
+			</section>
+
+			<section>
 				<h2>Debugging symbols</h2>
 
 				<ul>
@@ -265,13 +309,29 @@
 			</section>
 
 			<section>
+				<h2>Links</h2>
+
+				<ul>
+					<li><a href="https://www.amazon.com/Troubleshooting-Windows-Sysinternals-Tools-Russinovich-ebook/dp/B01MAU3YND">Troubleshooting with the Windows Sysinternals Tools (book)</a></li>
+					<li><a href="https://github.com/microsoft/perfview">PerfView</a></li>
+					<li><a href="https://channel9.msdn.com/Series/PerfView-Tutorial">PerfView tutorial</a></li>
+					<li><a href="https://github.com/Microsoft/clrmd">clrmd library</a></li>
+					<li><a href="https://github.com/fremag/MemoScope.Net">MemoScope.Net</a></li>
+					<li><a href="https://github.com/Dynatrace/superdump"></a>superdump</li>
+					<li><a href="https://gist.github.com/mattwarren/5f1be63ab0babd65b44a910b03abc474">List of ClrMD based tools</a></li>
+				</ul>
+			</section>
+
+			<section>
 				<h1>Thank you!</h1>
+				<div id="qrcode"></div>
 			</section>
 		</div>
 	</div>
 
 	<script src="lib/js/head.min.js"></script>
 	<script src="js/reveal.js"></script>
+	<script src="js/qrcode.min.js"></script>
 
 	<script>
 		// More info about config & dependencies:
@@ -293,6 +353,14 @@
 			height: 900,
 			minScale: 0.1,
 			maxScale: 1.5,
+		});
+
+		new QRCode(document.getElementById("qrcode"), "https://rsabirov.github.io/applications-troubleshooting-presentation/presentation/index.html", {
+			width: 256 * 4,
+			height: 256 * 4,
+			colorDark : "#000000",
+			colorLight : "#ffffff",
+			correctLevel : QRCode.CorrectLevel.H
 		});
 	</script>
 </body>

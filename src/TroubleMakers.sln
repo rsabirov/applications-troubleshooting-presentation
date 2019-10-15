@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiddenException", "HiddenException\HiddenException.csproj", "{A30E9918-D38A-41FF-A5CA-6587E2A9A62D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnhandledException", "UnhandledException\UnhandledException.csproj", "{3681E0A6-90FC-4668-90AE-3DCCF49CAA5B}"
@@ -7,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryLeak", "MemoryLeak\MemoryLeak.csproj", "{FFA7EF03-949C-423E-A71F-7AAE97A87338}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadLock", "DeadLock\DeadLock.csproj", "{C6368AB7-D897-42B2-B89C-01A8FD62880B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileNotFound", "FileNotFound\FileNotFound.csproj", "{685A5EE7-1E83-479D-867D-D3317AA3103C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryTraffic", "MemoryTraffic\MemoryTraffic.csproj", "{1391EFF0-70FA-4B11-8C2C-5E26A333A3CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +37,19 @@ Global
 		{C6368AB7-D897-42B2-B89C-01A8FD62880B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6368AB7-D897-42B2-B89C-01A8FD62880B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6368AB7-D897-42B2-B89C-01A8FD62880B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{685A5EE7-1E83-479D-867D-D3317AA3103C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{685A5EE7-1E83-479D-867D-D3317AA3103C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{685A5EE7-1E83-479D-867D-D3317AA3103C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{685A5EE7-1E83-479D-867D-D3317AA3103C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1391EFF0-70FA-4B11-8C2C-5E26A333A3CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1391EFF0-70FA-4B11-8C2C-5E26A333A3CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1391EFF0-70FA-4B11-8C2C-5E26A333A3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1391EFF0-70FA-4B11-8C2C-5E26A333A3CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B294BC1F-254D-4B4F-A330-9C735B96A162}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,6 @@
+div#qrcode {
+    text-align: center;
+    display: none;
+    width: 10em;
+    height: 10em;
+}

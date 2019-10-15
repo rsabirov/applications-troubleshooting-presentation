@@ -3,3 +3,4 @@
 **/obj/**/
 /tools/*
 *.DotSettings.user
+/src/.vs/
