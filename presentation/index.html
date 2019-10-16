@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	
+
 	<meta name="description" content=".NET Application troubleshooting tools overview">
 	<meta name="keywords" content="ETW,.NET,Performance,Profiling,troubleshooting,PerfView,ProcDump">
 	<meta name="author" content="Rail Sabirov">
@@ -34,13 +34,15 @@
 		<div class="slides">
 			<section>
 				<h1>Production troubleshooting in .NET</h1>
-				<hr/>
+				<hr />
 				<p>Rail Sabirov</p>
 				<p>GitHub: <a href="https://github.com/rsabirov">@rsabirov</a></p>
 
 				<aside class="notes">
-					<p>In this presentation I will give overview of the different techniques for troubleshooting.</p>
-					<p>This presentation is more about .NET applications, but some tools applicable to native apps also.</p>
+					<p>In this presentation I will give overview of some techniques for troubleshooting. This is a huge
+						topic and here we will cover it briefly.</p>
+					<p>This presentation is more about .NET applications, but some tools applicable to native apps also.
+					</p>
 				</aside>
 			</section>
 
@@ -56,16 +58,20 @@
 					<li class="fragment">can't install tools usually</li>
 				</ul>
 			</section>
-	
+
 			<section>
 				<h2>What can go wrong?</h2>
 				<ul>
+					<li class="fragment">high resource usage (cpu, mem, disk, network)</li>
 					<li class="fragment">app is crashing</li>
 					<li class="fragment">app is hanging</li>
 					<li class="fragment">app is slow</li>
-					<li class="fragment">high resource usage (cpu, mem, disk, ...)</li>
 					<li class="fragment">and many more... :)</li>
 				</ul>
+
+				<aside class="notes">
+					In this presentation I am going to talk about some of this problems.
+				</aside>
 			</section>
 
 			<section>
@@ -73,7 +79,7 @@
 
 				<ul>
 					<li>Application log files</li>
-					<li>Task manager / Process explorer</li>
+					<li>Task manager / Process explorer / Resource monitor</li>
 					<li>Windows Events log</li>
 					<li>Performance counters</li>
 					<li>Sysinternals tools</li>
@@ -84,9 +90,9 @@
 
 				<aside class="notes">
 					<p>"Application log files" usually can help with business logic related bugs.</p>
-
 					<p>
-						Windows provides some tools to get insights about system health and applications performance like Task Manager,
+						Windows provides some tools to get insights about system health and applications performance
+						like Task Manager,
 						Windows Events log, Performance counters, ETW Events.
 					</p>
 
@@ -95,73 +101,105 @@
 			</section>
 
 			<section>
-					<h2><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite">Sysinternals suite</a></h2>
-					<div>
-							AccessChk, AccessEnum, AdExplorer, AdInsight, AdRestore, Autologon, Autoruns, BgInfo, BlueScreen, CacheSet, ClockRes, Contig, 
-							Coreinfo, Ctrl2Cap, DebugView, Desktops, Disk2vhd, DiskExt, DiskMon, DiskView, Disk Usage (DU), EFSDump, FindLinks, Handle, 
-							Hex2dec, Junction, LDMDump, ListDLLs, LiveKd, LoadOrder, LogonSessions, MoveFile, NotMyFault, NTFSInfo, PageDefrag, PendMoves, 
-							PipeList, PortMon, ProcDump, Process Explorer, Process Monitor, PsExec, PsFile, PsGetSid, PsInfo, PsKill, PsList, PsLoggedOn, 
-							PsLogList, PsPasswd, PsPing, PsService, PsShutdown, PsSuspend, PsTools, RAMMap, RegDelNull, RegHide, RegJump, Registry Usage (RU), 
-							SDelete, ShareEnum, ShellRunas, Sigcheck, Streams, Strings, Sync, Sysmon, TCPView, VMMap, VolumeID, WhoIs, WinObj, ZoomIt
-					</div>
-	
-					<aside class="notes">
-						<p>It's worth to spend time reading at least description for each tool, to know which problem it solves and how can help.</p>
-						<p>Demo of following tools: Process Explorer, Autoruns, Process Monitor, ProcDump, TCPView...</p>						
-					</aside>
+				<h2><a href="https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite">Sysinternals
+						suite</a></h2>
+				<div>
+					AccessChk, AccessEnum, AdExplorer, AdInsight, AdRestore, Autologon, Autoruns, BgInfo, BlueScreen,
+					CacheSet, ClockRes, Contig,
+					Coreinfo, Ctrl2Cap, DebugView, Desktops, Disk2vhd, DiskExt, DiskMon, DiskView, Disk Usage (DU),
+					EFSDump, FindLinks, Handle,
+					Hex2dec, Junction, LDMDump, ListDLLs, LiveKd, LoadOrder, LogonSessions, MoveFile, NotMyFault,
+					NTFSInfo, PageDefrag, PendMoves,
+					PipeList, PortMon, ProcDump, Process Explorer, Process Monitor, PsExec, PsFile, PsGetSid, PsInfo,
+					PsKill, PsList, PsLoggedOn,
+					PsLogList, PsPasswd, PsPing, PsService, PsShutdown, PsSuspend, PsTools, RAMMap, RegDelNull, RegHide,
+					RegJump, Registry Usage (RU),
+					SDelete, ShareEnum, ShellRunas, Sigcheck, Streams, Strings, Sync, Sysmon, TCPView, VMMap, VolumeID,
+					WhoIs, WinObj, ZoomIt
+				</div>
+
+				<aside class="notes">
+					<p>Sometimes you can get a lot of information about what is going on using SysInternals toolset.</p>
+					<p>No installation required.</p>
+					<p>It's worth to spend time reading at least description for each tool, to know which problem it
+						solves and how can help.</p>
+				</aside>
 			</section>
 
 			<section>
-				<h2>Demo 1: ProcDump, Process Explorer</h2>
+				<h2>Demo 1: Process Monitor, Process Explorer</h2>
 
 				<aside class="notes">
-					<p>In this demo I will show how to do basic diagnostic using some of the SysInternals tools.</p>
-					<p></p>
+					<p>In this demo I will show how to do basic diagnostic using some of the SysInternals tools and perf
+						counters.</p>
+					<p>
+						I am hightlighting some of the patterns for metrics which is giving a hints to identify
+						different problems.
+						<ol>
+							<li>memory leak</li>
+							<li>memory traffic</li>
+							<li># pinned objects</li>
+							<li>induced GC</li>
+							<li>LOH size</li>
+							<li>Allocated Bytes (column)</li>
+						</ol>
+
+						Most of the metrics from ProcExp can be found in standard Perf Monitor tool.
+					</p>
 				</aside>
 			</section>
 
 			<section>
 				<h2>Event Tracing for Windows (ETW)</h2>
 
-				<ul>
-					<li>Semantic logging (each event and source has schema)</li>
-					<li>Fast. Very fast.</li>
-					<li>Doesn't affects performance if disabled</li>
+				<ul class="fragment">
+					<li>Technology for application <strong>non-intrusive</strong> production tracing</li>
+					<li>Built into Windows since NT 4</li>
+				</ul>
+				<ul class="fragment">
+					<li>Doesn't affect performance if disabled</li>
+					<li>Minimal performance effect when enabled</li>
 					<li>Can drop events if "performance is not enough"</li>
-					<li>Used internally in Windows</li>
 					<li>Used in .NET CLR (provides detailed info about CLR, JIT, GC...)</li>
+					<li>All the Windows subsystems instrumented by ETW</li>
 				</ul>
 
 				<aside class="notes">
 					ETW a general-purpose, high-speed tracing facility provided by the operating system.
-					Using a buffering and logging mechanism implemented in the kernel, ETW provides a tracing mechanism for
+					Using a buffering and logging mechanism implemented in the kernel, ETW provides a tracing mechanism
+					for
 					events raised by both user-mode applications and kernel-mode device drivers.
 					Additionally, ETW gives you the ability to enable and disable logging dynamically,
-					making it easy to perform detailed tracing in production environments without requiring reboots or application restarts.
-					The logging mechanism uses per-processor buffers that are written to disk by an asynchronous writer thread.
+					making it easy to perform detailed tracing in production environments without requiring reboots or
+					application restarts.
+					The logging mechanism uses per-processor buffers that are written to disk by an asynchronous writer
+					thread.
 					This allows large-scale server applications to write events with minimum disturbance.
 				</aside>
 			</section>
-	
+
 			<section>
 				<h2>ETW Architecture overview</h2>
 
 				<img src="img/etw-architecture-overview.png" title="ETW architecture (from MSDN Magazine April 2007)" />
 
 				<aside class="notes">
-					As shown, there are four main types of components in ETW:
-					event providers, controllers, consumers, and event trace sessions. Buffering and logging take place
-					in event tracing sessions, which accept events and create a trace file. There are a number of logging modes
-					available for ETW sessions. For instance, a session can be configured to deliver events directly to consumer
-					applications or to overwrite old events in a file by wrapping around when a certain size is reached.
-					A separate writer thread created for each session flushes them to a file or to real-time consumer applications.
-					To enable high-performance, per-processor buffers are used to eliminate the need for a lock in the logging path.
+					<p>As shown, there are four main types of components in ETW: event providers,
+						controllers, consumers, and event trace sessions.</p>
+
+					<p>Different providers, and examples are File system, Network, .NET GC, Bluetooth,
+						and any Application provided, for example Google Chrome has own providers.</p>
+
+					<p>Provider is not logging until enabled</p>
+
+					<p>logging to the OS managed buffers with overflow control for handling slow readers -> can drop
+						events</p>
 				</aside>
 			</section>
 
 			<section>
-				<h2>PerfView</h2>
-				<p>Very powerful tool for ETW</p>
+				<h2>PerfView tool</h2>
+				<p>Powerful tool to work with ETW</p>
 
 				<ul>
 					<li>No installation needed</li>
@@ -172,11 +210,37 @@
 					<li>Analyze File/Network access</li>
 					<li>Trace anything in Windows</li>
 				</ul>
+			</section>
+
+			<section>
+				<h2>Demo 2: PerfView</h2>
 
 				<aside class="notes">
-					PerfView demo: show providers list, show how to capture, show the results (CPU, GC, Events).
+					<ul>
+						<li>providers list</li>
+						<li>how to capture</li>
+						<li>process list, Events in file</li>
+						<li>CPU Profiling</li>
+						<li>Memory Traffic</li>
+						<li>GC Events</li>
+						<li>Contention</li>
+					</ul>
 				</aside>
 			</section>
+
+			<section>
+				<h2>Memory dump</h2>
+
+				<ul>
+					<li>Memory dump is a snapshot of running process</li>
+					<li>A dump file is static snapshot, but you can use several dump</li>
+					<li>Crash dumps are generated when an application crashes</li>
+				</ul>
+			</section>
+
+			<aside class="notes">
+				Which application did you use to analyze?
+			</aside>
 
 			<section>
 				<h2>How to get Memory dump?</h2>
@@ -184,53 +248,61 @@
 				<ul>
 					<li class="fragment">Windows Task Manager</li>
 					<li class="fragment">Sysinternals Process Explorer</li>
-					<li class="fragment"><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb787181">Windows Error Reporting</a></li>
+					<li class="fragment"><a
+							href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb787181">Windows Error
+							Reporting</a></li>
 					<li class="fragment">ProcDump</li>
 				</ul>
 
 				<aside class="notes">
 					<p>How we can get Memory dump?</p>
-					<p>WER can save crash dumps to folder defined in registry. It's worth configure it on all Prod and Testing environments.</p>
-					<p>Task manager and Process Explorer might be enough for simple apps (with small memory footprint), because they suspending process execution.</p>
+					<p>WER can save crash dumps to folder defined in registry. It's worth configure it on all Prod and
+						Testing environments.</p>
+					<p>Task manager and Process Explorer might be enough for simple apps (with small memory footprint),
+						because they suspending process execution.</p>
 				</aside>
 			</section>
 
 			<section>
 				<h2>ProcDump</h2>
-				
+
 				<div class="fragment">
 					<p>Write a mini dump when process window is unresponsive for more than 5 seconds:</p>
 					<pre><code data-trim class="lang-shell">
 						procdump -h outlook.exe hungwindow.dmp
 					</code></pre>
 				</div>
-				
+
 				<div class="fragment">
 					Write a dump when process has an unhandled exception
 					<pre><code data-trim class="lang-shell">
 						procdump -mp -e store.exe
 					</code></pre>
-				</div>				
+				</div>
 
 				<div class="fragment">
-					Write a full dump of a process with PID '4572' using cloning (to avoid service interruptions)
+					Write a full dump of a process with PID '4572' using cloning (to <strong>avoid service
+						interruptions</strong>)
 					<pre><code data-trim class="lang-shell">
 						procdump -ma -r 4572
 					</code></pre>
 				</div>
 
 				<div class="fragment">
-					Write a mini dump of a process named 'outlook' when total system CPU usage exceeds 20% for 10 seconds
+					Write a mini dump of a process named 'outlook' when total system CPU usage exceeds 20% for 10
+					seconds
 					<pre><code data-trim class="lang-shell">
 						procdump outlook -p "\Processor(_Total)\% Processor Time" 20
 					</code></pre>
 				</div>
-	
+
 				<aside class="notes">
 					<p>
 						ProcDump advanced tool for dumps capturing in production.
-						It can clone process memory to not interrupt execution. It can get crash dumps, and dumps on perf counter related condition.
+						It can clone process memory to not interrupt execution. It can get crash dumps, and dumps on
+						perf counter related condition.
 					</p>
+					<p>Tell about prod experience</p>
 					<p>Here is examples of some ProcDump commands.</p>
 					<p>Mini dump format only includes thread and handle information.</p>
 					<p>Full dump only all process memory.</p>
@@ -250,7 +322,7 @@
 
 				<aside class="notes">
 					<p>
-						Easiest way is to use DebugDiag from Windows debugging tools. It has 2 rule sets: 
+						Easiest way is to use DebugDiag from Windows debugging tools. It has 2 rule sets:
 						Crash/Hang analysis (crash dumps, exceptions, deadlocks) and Memory analysis (memory issues).
 					</p>
 					<p>
@@ -260,7 +332,8 @@
 						PerfView can get only list of the objects (not primary use case).
 					</p>
 					<p>
-						To use WinDbg you should at least hacker :). Not really... Just google for "windbg .net cheat sheet".
+						To use WinDbg you should at least hacker :). Not really... Just google for "windbg .net cheat
+						sheet".
 					</p>
 					<p>
 						clrmd library provides .net api to memory dumps!
@@ -275,14 +348,16 @@
 					<li class="fragment">Open dump file in DebugDiag</li>
 					<li class="fragment">google "WinDbg cheatsheet"</li>
 					<li class="fragment">try to make it work :)</li>
-					<li class="fragment">Profit! (may be)</li>
+					<li class="fragment">Profit! (maybe)</li>
 
 					<li class="fragment">Very powerfull tool</li>
+					<li class="fragment">Try to avoid it</li>
 				</ul>
 
 				<aside class="notes">
 					<p>
-						To use WinDbg you should at least hacker :). Not really... Just google for "windbg .net cheat sheet".
+						To use WinDbg you should at least hacker :). Not really... Just google for "windbg .net cheat
+						sheet".
 					</p>
 				</aside>
 			</section>
@@ -304,21 +379,28 @@
 							_NT_SYMBOL_PATH=SRV*%TEMP%\symbols*http://msdl.microsoft.com/download/symbols 
 						</code></pre>
 					</li>
-					<li>Include *.pdb files application distribution package</li>
+					<li><strong>Always</strong> include *.pdb files application distribution package</li>
 				</ul>
+
+				<aside class="notes">
+					<p>Required for any dump analysis tool.</p>
+				</aside>
 			</section>
 
 			<section>
 				<h2>Links</h2>
 
 				<ul>
-					<li><a href="https://www.amazon.com/Troubleshooting-Windows-Sysinternals-Tools-Russinovich-ebook/dp/B01MAU3YND">Troubleshooting with the Windows Sysinternals Tools (book)</a></li>
+					<li><a
+							href="https://www.amazon.com/Troubleshooting-Windows-Sysinternals-Tools-Russinovich-ebook/dp/B01MAU3YND">Troubleshooting
+							with the Windows Sysinternals Tools (book)</a></li>
 					<li><a href="https://github.com/microsoft/perfview">PerfView</a></li>
 					<li><a href="https://channel9.msdn.com/Series/PerfView-Tutorial">PerfView tutorial</a></li>
 					<li><a href="https://github.com/Microsoft/clrmd">clrmd library</a></li>
 					<li><a href="https://github.com/fremag/MemoScope.Net">MemoScope.Net</a></li>
 					<li><a href="https://github.com/Dynatrace/superdump"></a>superdump</li>
-					<li><a href="https://gist.github.com/mattwarren/5f1be63ab0babd65b44a910b03abc474">List of ClrMD based tools</a></li>
+					<li><a href="https://gist.github.com/mattwarren/5f1be63ab0babd65b44a910b03abc474">List of ClrMD
+							based tools</a></li>
 				</ul>
 			</section>
 
@@ -345,7 +427,7 @@
 				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
 			]
 		});
-		Reveal.configure({ 
+		Reveal.configure({
 			slideNumber: 'c/t',
 			transition: 'fade',
 
@@ -358,9 +440,9 @@
 		new QRCode(document.getElementById("qrcode"), "https://rsabirov.github.io/applications-troubleshooting-presentation/presentation/index.html", {
 			width: 256 * 4,
 			height: 256 * 4,
-			colorDark : "#000000",
-			colorLight : "#ffffff",
-			correctLevel : QRCode.CorrectLevel.H
+			colorDark: "#000000",
+			colorLight: "#ffffff",
+			correctLevel: QRCode.CorrectLevel.H
 		});
 	</script>
 </body>

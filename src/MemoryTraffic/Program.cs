@@ -21,7 +21,7 @@ namespace MemoryTraffic
         private static byte[] GenerateMemoryTraffic()
         {
             var mb = 1024 * 1024;
-            var size = new Random().Next(mb, mb * 32);
+            var size = new Random().Next(mb * 100, mb * 300);
 
             return new byte[size];
         }
