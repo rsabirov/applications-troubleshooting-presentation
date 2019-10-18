@@ -419,12 +419,14 @@
 		// More info about config & dependencies:
 		// - https://github.com/hakimel/reveal.js#configuration
 		// - https://github.com/hakimel/reveal.js#dependencies
+		var gaPropertyID = 'UA-150365822-1';
 		Reveal.initialize({
 			dependencies: [
 				{ src: 'plugin/markdown/marked.js' },
 				{ src: 'plugin/markdown/markdown.js' },
 				{ src: 'plugin/notes/notes.js', async: true },
-				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+				{ src: 'plugin/ga/reveal-ga.min.js' }				
 			]
 		});
 		Reveal.configure({
